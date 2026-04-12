@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — BitKids</title>
+  <meta name="description" content="BitKids Privacy Policy. Learn how we collect, use, and protect your family's data." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange:       #FF8C00;
+      --orange-dark:  #CC7000;
+      --orange-light: #FFB347;
+      --orange-faded: #FFF3E0;
+      --purple:       #7C3AED;
+      --purple-dark:  #5B21B6;
+      --purple-light: #A78BFA;
+      --purple-faded: #EDE9FE;
+      --bg:           #FFFBF5;
+      --bg-dark:      #1A1033;
+      --text:         #1A1033;
+      --text-2:       #6B5B8D;
+      --text-muted:   #A89BBE;
+      --border:       #E8E0F0;
+      --white:        #FFFFFF;
+      --radius:       16px;
+      --radius-lg:    24px;
+      --shadow:       0 4px 24px rgba(124,58,237,0.10);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,251,245,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px; font-weight: 700; color: var(--text);
+    }
+    .nav-logo .zap {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; box-shadow: 0 2px 8px rgba(255,140,0,.35);
+    }
+    .nav-back {
+      font-size: 15px; font-weight: 500; color: var(--text-2);
+      transition: color .2s;
+    }
+    .nav-back:hover { color: var(--orange); }
+
+    /* ── Policy Content ── */
+    .policy-hero {
+      padding: 64px 0 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .policy-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .policy-hero .updated {
+      font-size: 15px;
+      color: var(--text-2);
+    }
+    .policy {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .policy section {
+      margin-bottom: 40px;
+    }
+    .policy h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--orange-faded);
+    }
+    .policy h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--purple);
+      margin: 20px 0 8px;
+    }
+    .policy p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text-2);
+      margin-bottom: 12px;
+    }
+    .policy ul {
+      list-style: none;
+      margin: 0 0 16px 0;
+      padding: 0;
+    }
+    .policy ul li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text-2);
+      margin-bottom: 6px;
+    }
+    .policy ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 10px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+    .policy a.link {
+      color: var(--purple);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .policy a.link:hover {
+      color: var(--orange);
+    }
+    .policy .highlight-box {
+      background: var(--purple-faded);
+      border: 1px solid var(--purple-light);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .policy .highlight-box p {
+      color: var(--purple-dark);
+      margin-bottom: 0;
+      font-weight: 500;
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--bg-dark); color: rgba(255,255,255,.55);
+      padding: 60px 0 32px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand .nav-logo { color: var(--white); margin-bottom: 14px; }
+    .footer-brand p { font-size: 14px; line-height: 1.65; max-width: 260px; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,.45); transition: color .2s; }
+    .footer-col a:hover { color: var(--orange); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 13px; }
+    .footer-badges { display: flex; gap: 10px; }
+    .footer-badge {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; padding: 6px 12px; font-size: 12px; color: rgba(255,255,255,.4);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .policy-hero h1 { font-size: 32px; }
+    }
+    @media (max-width: 540px) {
+      .footer-grid { grid-template-columns: 1fr; }
+      .policy-hero h1 { font-size: 26px; }
+      .policy h2 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="zap">⚡</div>
+      BitKids
+    </a>
+    <a href="index.html" class="nav-back">&larr; Back to Home</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="policy-hero">
+  <div class="container">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: March 18, 2026</p>
+  </div>
+</div>
+
+<!-- ═══════════════ POLICY ═══════════════ -->
+<div class="policy">
+
+  <p>BitKids ("we," "our," or "us") is a family Bitcoin education app designed for parents and their children ages 6 through 16. We take your family's privacy seriously. This Privacy Policy explains what information we collect, how we use it, and how we protect it.</p>
+  <p>By using BitKids, you agree to the practices described in this policy. If you do not agree, please do not use the app.</p>
+
+  <!-- 1 -->
+  <section>
+    <h2>1. Information We Collect</h2>
+
+    <h3>Account Information</h3>
+    <p>When a parent creates an account, we collect:</p>
+    <ul>
+      <li>Name</li>
+      <li>Email address</li>
+      <li>Password (stored securely using industry-standard hashing)</li>
+    </ul>
+
+    <h3>Child Profiles</h3>
+    <p>Parents create profiles for their children within the app. For each child we store:</p>
+    <ul>
+      <li>Display name chosen by the parent</li>
+      <li>Lesson progress and quiz scores</li>
+    </ul>
+    <p>We do not collect a child's email address, date of birth, or any government-issued identifiers.</p>
+
+    <h3>Wallet and Transaction Data</h3>
+    <p>BitKids includes a custodial Lightning wallet managed by the parent. We store:</p>
+    <ul>
+      <li>Satoshi (sat) balances for each child profile</li>
+      <li>Lightning payment hashes associated with funding and reward transactions</li>
+      <li>Transaction history (amounts, timestamps, descriptions)</li>
+    </ul>
+
+    <h3>Camera Access</h3>
+    <p>The app requests camera permission solely to scan QR codes for Lightning invoices and payment requests. We do not capture, store, or transmit photos or video. Camera data is processed on-device only.</p>
+
+    <h3>Location Data</h3>
+    <p>The "Spend Map" feature uses your device's location to show nearby merchants that accept Bitcoin. Location data is used on-device to display the map and is not stored on our servers or shared with third parties.</p>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <h2>2. How We Use Your Information</h2>
+    <p>We use the information we collect to:</p>
+    <ul>
+      <li>Create and maintain your parent account and child profiles</li>
+      <li>Track lesson progress and quiz completion for each child</li>
+      <li>Process Lightning wallet transactions (funding, rewards, withdrawals)</li>
+      <li>Manage subscriptions and payment status</li>
+      <li>Send important account-related communications (e.g., password resets)</li>
+      <li>Improve and maintain the app's functionality and security</li>
+    </ul>
+    <p>We do not use your information for advertising, behavioral profiling, or marketing purposes.</p>
+  </section>
+
+  <!-- 3 -->
+  <section>
+    <h2>3. Children's Privacy</h2>
+    <div class="highlight-box">
+      <p>BitKids is designed to comply with the Children's Online Privacy Protection Act (COPPA). Children under 13 may only use the app under the direct supervision of a parent or legal guardian who has created an account.</p>
+    </div>
+    <p>Key protections for children:</p>
+    <ul>
+      <li>Only a verified parent account holder (age 18+) can create child profiles</li>
+      <li>Children do not create their own accounts or provide personal information directly</li>
+      <li>We collect only the minimum information necessary (display name and learning progress)</li>
+      <li>We never sell, rent, or share children's data with third parties</li>
+      <li>We do not serve advertisements to children</li>
+      <li>Parents can review, modify, or delete their child's data at any time</li>
+    </ul>
+    <p>If you believe we have inadvertently collected personal information from a child without proper parental consent, please contact us immediately at <a href="mailto:support@bitkids.app" class="link">support@bitkids.app</a> and we will promptly delete it.</p>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <h2>4. Data Storage and Security</h2>
+    <p>Your data is stored on a PostgreSQL database hosted on Railway, a cloud infrastructure provider. We implement the following security measures:</p>
+    <ul>
+      <li>All data transmitted between the app and our servers is encrypted using TLS/HTTPS</li>
+      <li>Passwords are hashed using industry-standard algorithms and are never stored in plain text</li>
+      <li>Database access is restricted to authorized services only</li>
+      <li>We conduct regular reviews of our security practices</li>
+    </ul>
+    <p>While we take reasonable steps to protect your information, no method of electronic transmission or storage is 100% secure. We encourage you to use a strong, unique password for your BitKids account.</p>
+  </section>
+
+  <!-- 5 -->
+  <section>
+    <h2>5. Data Retention and Deletion</h2>
+    <p>We retain your account data for as long as your account is active. You have the right to:</p>
+    <ul>
+      <li>Request a copy of all data associated with your account</li>
+      <li>Delete individual child profiles and their associated data</li>
+      <li>Delete your entire account and all associated data permanently</li>
+    </ul>
+    <p>To request data deletion, contact us at <a href="mailto:support@bitkids.app" class="link">support@bitkids.app</a>. We will process deletion requests within 30 days. Once deleted, your data cannot be recovered.</p>
+    <p>Please note that Lightning payment hashes recorded on the Bitcoin Lightning Network are part of a decentralized protocol and cannot be deleted by us.</p>
+  </section>
+
+  <!-- 6 -->
+  <section>
+    <h2>6. Third-Party Services</h2>
+    <p>BitKids integrates with the following third-party services:</p>
+
+    <h3>Lightning Network (via Nostr Wallet Connect)</h3>
+    <p>We use the Lightning Network to process Bitcoin payments for wallet funding, rewards, and subscriptions. Payment hashes and invoice data are shared with Lightning Network nodes as required to complete transactions. These interactions are governed by the decentralized Lightning protocol.</p>
+
+    <h3>What We Do Not Use</h3>
+    <ul>
+      <li>No third-party analytics or tracking SDKs</li>
+      <li>No advertising networks or ad SDKs</li>
+      <li>No social media trackers</li>
+      <li>No cross-app or cross-site tracking (NSPrivacyTracking is set to false)</li>
+    </ul>
+  </section>
+
+  <!-- 7 -->
+  <section>
+    <h2>7. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. When we make changes, we will update the "Last updated" date at the top of this page. For material changes, we will notify you via the email address associated with your account.</p>
+    <p>We encourage you to review this policy periodically. Your continued use of BitKids after changes are posted constitutes your acceptance of the updated policy.</p>
+  </section>
+
+  <!-- 8 -->
+  <section>
+    <h2>8. Contact Us</h2>
+    <p>If you have questions about this Privacy Policy, your data, or your children's privacy, please contact us:</p>
+    <ul>
+      <li>Email: <a href="mailto:support@bitkids.app" class="link">support@bitkids.app</a></li>
+    </ul>
+    <p>We aim to respond to all inquiries within 48 hours.</p>
+  </section>
+
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:14px;">
+          <div class="zap">⚡</div>
+          BitKids
+        </div>
+        <p>The family Bitcoin app. Teach your kids financial literacy through real, hands-on experience with the Lightning Network.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#how-it-works">How It Works</a></li>
+          <li><a href="index.html#download">Download</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>For Families</h4>
+        <ul>
+          <li><a href="index.html#parents">For Parents</a></li>
+          <li><a href="index.html#kids">For Kids</a></li>
+          <li><a href="index.html#faq">FAQ</a></li>
+          <li><a href="mailto:support@bitkids.app">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="mailto:support@bitkids.app">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BitKids. All rights reserved. Bitcoin is not a toy — but learning about it should be.</p>
+      <div class="footer-badges">
+        <div class="footer-badge">⚡ Lightning Network</div>
+        <div class="footer-badge">🔒 Non-Custodial Option</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

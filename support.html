@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — BitKids</title>
+  <meta name="description" content="Get help with BitKids. Contact support, browse FAQs, and find answers to common questions." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange:       #FF8C00;
+      --orange-dark:  #CC7000;
+      --orange-light: #FFB347;
+      --orange-faded: #FFF3E0;
+      --purple:       #7C3AED;
+      --purple-dark:  #5B21B6;
+      --purple-light: #A78BFA;
+      --purple-faded: #EDE9FE;
+      --bg:           #FFFBF5;
+      --text:         #1A1033;
+      --text-2:       #6B5B8D;
+      --border:       #E8E0F0;
+      --white:        #FFFFFF;
+      --radius:       16px;
+      --shadow:       0 4px 24px rgba(124,58,237,0.10);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,251,245,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1160px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px; font-weight: 700; color: var(--text);
+    }
+    .nav-logo .zap {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; box-shadow: 0 2px 8px rgba(255,140,0,.35);
+    }
+
+    /* ── Container ── */
+    .container { max-width: 760px; margin: 0 auto; padding: 0 24px; }
+    main { flex: 1; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 48px;
+    }
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 48px; font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--orange); }
+    .hero p {
+      font-size: 18px; color: var(--text-2);
+      max-width: 520px; margin: 0 auto;
+    }
+
+    /* ── Contact Card ── */
+    .contact-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      margin-bottom: 48px;
+    }
+    .contact-card h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .contact-card p {
+      color: var(--text-2); font-size: 15px;
+      margin-bottom: 20px;
+    }
+    .contact-email {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--orange-faded);
+      color: var(--orange-dark);
+      font-size: 16px; font-weight: 700;
+      padding: 12px 28px; border-radius: 999px;
+      border: 1.5px solid var(--orange-light);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .contact-email:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(255,140,0,.25);
+    }
+    .response-note {
+      margin-top: 16px;
+      font-size: 13px; color: var(--text-2);
+    }
+
+    /* ── FAQ ── */
+    .faq-section { margin-bottom: 48px; }
+    .faq-section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 26px; font-weight: 700;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; }
+    .faq-item {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .faq-item summary {
+      padding: 20px 24px;
+      font-size: 16px; font-weight: 600;
+      cursor: pointer;
+      list-style: none;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .15s;
+    }
+    .faq-item summary:hover { background: var(--orange-faded); }
+    .faq-item summary::after {
+      content: '+';
+      font-size: 20px; font-weight: 700;
+      color: var(--orange);
+      flex-shrink: 0;
+      margin-left: 16px;
+      transition: transform .2s;
+    }
+    .faq-item[open] summary::after {
+      content: '-';
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-answer {
+      padding: 0 24px 20px;
+      font-size: 15px; color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* ── Links ── */
+    .links-section {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .links-section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .links-row {
+      display: flex; justify-content: center; gap: 24px;
+      flex-wrap: wrap;
+    }
+    .links-row a {
+      font-size: 15px; font-weight: 600;
+      color: var(--purple);
+      padding: 10px 20px;
+      border: 1.5px solid var(--purple-light);
+      border-radius: 999px;
+      background: var(--purple-faded);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .links-row a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(124,58,237,.2);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 14px; color: var(--text-2);
+    }
+    footer a {
+      color: var(--purple); font-weight: 500;
+    }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .hero { padding: 56px 16px 36px; }
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+      .contact-card { padding: 24px 20px; }
+      .faq-item summary { padding: 16px 20px; font-size: 15px; }
+      .faq-answer { padding: 0 20px 16px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="zap">&#9889;</span>
+        BitKids
+      </a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <h1>Need <span>Help?</span></h1>
+      <p>We're here to help you and your family get the most out of BitKids. Find answers below or reach out directly.</p>
+    </section>
+
+    <div class="container">
+
+      <!-- Contact Card -->
+      <div class="contact-card">
+        <h2>Contact Us</h2>
+        <p>Have a question, found a bug, or just want to say hi? Send us an email.</p>
+        <a href="mailto:support@bitkids.app" class="contact-email">
+          &#9993; support@bitkids.app
+        </a>
+        <p class="response-note">We typically respond within 24 hours.</p>
+      </div>
+
+      <!-- FAQ -->
+      <section class="faq-section">
+        <h2>Quick Help</h2>
+        <div class="faq-list">
+
+          <details class="faq-item">
+            <summary>How do I reset my password?</summary>
+            <div class="faq-answer">
+              On the login screen, tap "Forgot Password?" and enter the email address associated with your account. You'll receive a reset link within a few minutes. If you don't see it, check your spam folder.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>How do I add a child to my account?</summary>
+            <div class="faq-answer">
+              Open the app and go to Settings, then tap "Add Child." You'll be asked to enter a name and create a PIN for the child's profile. Free accounts support one child; upgrade to a paid plan for unlimited children.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>How do I fund my wallet?</summary>
+            <div class="faq-answer">
+              Navigate to the Wallet tab and tap "Fund Wallet." You'll receive a Lightning invoice that you can pay from any Lightning-compatible Bitcoin wallet. The sats will appear in your balance once the payment confirms.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>How do I cancel my subscription?</summary>
+            <div class="faq-answer">
+              Go to Settings and tap the "Subscription" row. From there you can manage your plan. Since BitKids uses Lightning payments, there are no recurring charges — your subscription simply expires at the end of the billing period if you choose not to renew.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>How do I delete my account?</summary>
+            <div class="faq-answer">
+              Go to Settings and scroll to the bottom to find "Delete Account." This will permanently remove your account and all associated data, including child profiles and wallet history. Please make sure to withdraw any remaining sats before deleting. If you need help, email us at <a href="mailto:support@bitkids.app" style="color: var(--orange); font-weight: 600;">support@bitkids.app</a>.
+            </div>
+          </details>
+
+        </div>
+      </section>
+
+      <!-- Legal Links -->
+      <section class="links-section">
+        <h2>Legal</h2>
+        <div class="links-row">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 BitKids. All rights reserved. &nbsp;|&nbsp; <a href="index.html">Home</a> &nbsp;|&nbsp; <a href="privacy.html">Privacy</a> &nbsp;|&nbsp; <a href="terms.html">Terms</a></p>
+  </footer>
+
+</body>
+</html>

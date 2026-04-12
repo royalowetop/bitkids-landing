@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BitKids — Teach Your Kids Bitcoin, One Sat at a Time</title>
+  <meta name="description" content="BitKids is the family Bitcoin app where kids earn real sats by completing lessons and quizzes. Parents set rewards, track progress, and manage their child's Lightning wallet." />
+  <meta property="og:title" content="BitKids — Bitcoin Education for Kids" />
+  <meta property="og:description" content="Kids earn real Bitcoin (sats) by learning. Parents stay in control. Everyone wins." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --orange:       #FF8C00;
+      --orange-dark:  #CC7000;
+      --orange-light: #FFB347;
+      --orange-faded: #FFF3E0;
+      --purple:       #7C3AED;
+      --purple-dark:  #5B21B6;
+      --purple-light: #A78BFA;
+      --purple-faded: #EDE9FE;
+      --bg:           #FFFBF5;
+      --bg-dark:      #1A1033;
+      --text:         #1A1033;
+      --text-2:       #6B5B8D;
+      --text-muted:   #A89BBE;
+      --border:       #E8E0F0;
+      --success:      #10B981;
+      --white:        #FFFFFF;
+      --radius:       16px;
+      --radius-lg:    24px;
+      --shadow:       0 4px 24px rgba(124,58,237,0.10);
+      --shadow-lg:    0 8px 48px rgba(124,58,237,0.18);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ── Utility ── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--orange-faded); color: var(--orange-dark);
+      font-size: 13px; font-weight: 700; letter-spacing: .02em;
+      padding: 6px 14px; border-radius: 999px;
+      border: 1.5px solid var(--orange-light);
+    }
+    .badge-purple {
+      background: var(--purple-faded); color: var(--purple-dark);
+      border-color: var(--purple-light);
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,251,245,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px; font-weight: 700; color: var(--text);
+    }
+    .nav-logo .zap {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; box-shadow: 0 2px 8px rgba(255,140,0,.35);
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 15px; font-weight: 500; color: var(--text-2);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 11px 22px; border-radius: 999px;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer; border: none; transition: transform .15s, box-shadow .15s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--orange), var(--orange-light));
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(255,140,0,.40);
+    }
+    .btn-primary:hover { box-shadow: 0 6px 24px rgba(255,140,0,.55); }
+    .btn-outline {
+      background: transparent; color: var(--text);
+      border: 2px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+    .btn-lg { padding: 15px 30px; font-size: 16px; }
+    .btn-xl { padding: 18px 36px; font-size: 17px; border-radius: 16px; }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 96px 0 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 900px 600px at 60% -10%, rgba(255,140,0,.12) 0%, transparent 70%),
+        radial-gradient(ellipse 700px 500px at -10% 80%, rgba(124,58,237,.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .hero-eyebrow { margin-bottom: 20px; }
+    .hero-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(38px, 5vw, 58px);
+      font-weight: 700; line-height: 1.08;
+      letter-spacing: -.02em; color: var(--text);
+      margin-bottom: 22px;
+    }
+    .hero-headline .highlight {
+      background: linear-gradient(120deg, var(--orange), var(--orange-light));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 18px; color: var(--text-2); line-height: 1.65;
+      max-width: 480px; margin-bottom: 36px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 40px; }
+    .store-btn {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--text); color: var(--white);
+      padding: 13px 22px; border-radius: 14px;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 16px rgba(26,16,51,.20);
+    }
+    .store-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(26,16,51,.28); }
+    .store-btn .store-icon { font-size: 28px; line-height: 1; display: flex; align-items: center; flex-shrink: 0; }
+    .store-btn .store-text { text-align: left; }
+    .store-btn .store-label { font-size: 11px; opacity: .7; display: block; }
+    .store-btn .store-name { font-size: 17px; font-weight: 700; display: block; }
+    .hero-social-proof {
+      display: flex; align-items: center; gap: 14px;
+      font-size: 14px; color: var(--text-2);
+    }
+    .proof-avatars { display: flex; }
+    .proof-avatars span {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 2px solid var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      margin-left: -8px; first-child { margin-left: 0; }
+    }
+    .proof-avatars span:first-child { margin-left: 0; }
+
+    /* ── Phone Mockup ── */
+    .hero-visual { position: relative; }
+    .phone-stack { position: relative; height: 560px; }
+    .phone {
+      position: absolute;
+      width: 240px;
+      background: var(--bg-dark);
+      border-radius: 36px;
+      box-shadow: 0 32px 80px rgba(26,16,51,.45), 0 0 0 1.5px rgba(255,255,255,.06);
+      overflow: hidden;
+      transform-origin: bottom center;
+    }
+    .phone-notch {
+      width: 90px; height: 24px; background: var(--bg-dark);
+      border-radius: 0 0 16px 16px; margin: 0 auto;
+      position: relative; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .phone-notch::before {
+      content: ''; width: 50px; height: 5px;
+      background: #2A1F4A; border-radius: 3px;
+    }
+    .phone-screen { padding: 0 14px 20px; }
+    .phone-main {
+      left: 50%; top: 0;
+      transform: translateX(-50%);
+      height: 520px; z-index: 3;
+    }
+    .phone-left {
+      left: 8%;
+      top: 60px;
+      transform: rotate(-8deg);
+      z-index: 1; opacity: .85;
+      height: 480px;
+    }
+    .phone-right {
+      right: 8%;
+      top: 60px;
+      transform: rotate(8deg);
+      z-index: 1; opacity: .85;
+      height: 480px;
+    }
+
+    /* ── Phone Screen Content ── */
+    .ps-header {
+      padding: 10px 0 12px;
+      text-align: center;
+    }
+    .ps-greeting { font-size: 11px; color: #A89BBE; margin-bottom: 2px; }
+    .ps-name { font-size: 14px; font-weight: 700; color: var(--white); }
+    .ps-stash-card {
+      background: linear-gradient(135deg, #FF8C00, #FFB347);
+      border-radius: 16px; padding: 16px; margin-bottom: 12px;
+      text-align: center;
+    }
+    .ps-stash-label { font-size: 10px; color: rgba(255,255,255,.75); margin-bottom: 4px; }
+    .ps-stash-amount { font-size: 28px; font-weight: 900; color: var(--white); letter-spacing: -.02em; }
+    .ps-stash-unit { font-size: 11px; color: rgba(255,255,255,.8); }
+    .ps-btns { display: flex; gap: 6px; margin-top: 8px; }
+    .ps-btn {
+      flex: 1; background: rgba(255,255,255,.2);
+      border-radius: 8px; padding: 6px 0;
+      font-size: 10px; font-weight: 700; color: var(--white); text-align: center;
+    }
+    .ps-lesson-card {
+      background: #2A1F4A; border-radius: 12px; padding: 12px; margin-bottom: 8px;
+      border-left: 3px solid var(--orange);
+    }
+    .ps-lesson-num {
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--orange); display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--white);
+      float: left; margin-right: 8px;
+    }
+    .ps-lesson-title { font-size: 11px; font-weight: 700; color: var(--white); }
+    .ps-lesson-desc { font-size: 10px; color: #A89BBE; margin-top: 2px; }
+    .ps-lesson-reward {
+      display: inline-flex; align-items: center; gap: 3px;
+      background: rgba(255,140,0,.2); border-radius: 6px;
+      padding: 2px 7px; font-size: 10px; font-weight: 700; color: var(--orange);
+      margin-top: 6px; clear: both;
+    }
+    .ps-goal-card {
+      background: #2A1F4A; border-radius: 12px; padding: 10px; margin-bottom: 8px;
+    }
+    .ps-goal-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .ps-goal-name { font-size: 11px; font-weight: 700; color: var(--white); }
+    .ps-goal-pct { font-size: 11px; color: var(--orange); font-weight: 700; }
+    .ps-progress { height: 8px; background: #3D2E60; border-radius: 4px; overflow: hidden; }
+    .ps-progress-fill { height: 100%; background: linear-gradient(90deg, var(--orange), var(--orange-light)); border-radius: 4px; }
+    .ps-section-label { font-size: 10px; font-weight: 700; color: #A89BBE; margin: 8px 0 4px; text-transform: uppercase; letter-spacing: .05em; }
+
+    /* Parent phone */
+    .ps-wallet-card {
+      background: linear-gradient(135deg, #7C3AED, #A78BFA);
+      border-radius: 16px; padding: 14px; margin-bottom: 10px;
+    }
+    .ps-wallet-label { font-size: 10px; color: rgba(255,255,255,.75); margin-bottom: 2px; }
+    .ps-wallet-amount { font-size: 22px; font-weight: 900; color: var(--white); }
+    .ps-wallet-sub { font-size: 10px; color: rgba(255,255,255,.6); }
+    .ps-child-card {
+      background: #2A1F4A; border-radius: 12px; padding: 10px;
+      display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
+    }
+    .ps-child-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #FF8C00; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--white); flex-shrink: 0;
+    }
+    .ps-child-name { font-size: 12px; font-weight: 700; color: var(--white); }
+    .ps-child-hint { font-size: 10px; color: #A89BBE; }
+    .ps-runway {
+      background: rgba(251,191,36,.15); border-radius: 8px; padding: 8px 10px;
+      display: flex; align-items: center; gap: 6px; margin-top: 8px;
+    }
+    .ps-runway-dot { width: 8px; height: 8px; border-radius: 50%; background: #FBBF24; flex-shrink: 0; }
+    .ps-runway-text { font-size: 10px; color: #92400E; font-weight: 600; }
+
+    /* ── Ticker / Stats Bar ── */
+    .stats-bar {
+      background: var(--bg-dark);
+      padding: 18px 0; overflow: hidden;
+    }
+    .stats-inner {
+      display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+      justify-content: center;
+    }
+    .stat-item { display: flex; align-items: center; gap: 10px; }
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px; font-weight: 700; color: var(--orange);
+    }
+    .stat-label { font-size: 14px; color: rgba(255,255,255,.55); }
+    .stat-divider { width: 1px; height: 28px; background: rgba(255,255,255,.1); }
+
+    /* ── Section headers ── */
+    .section { padding: 96px 0; }
+    .section-alt { background: linear-gradient(180deg, var(--white) 0%, var(--bg) 100%); }
+    .section-dark { background: var(--bg-dark); color: var(--white); }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700; letter-spacing: -.02em;
+      margin-bottom: 14px; line-height: 1.15;
+    }
+    .section-sub { font-size: 18px; color: var(--text-2); max-width: 560px; margin: 0 auto; }
+    .section-dark .section-sub { color: rgba(255,255,255,.55); }
+
+    /* ── Features Grid ── */
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg); padding: 32px;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--orange-light);
+    }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 18px;
+    }
+    .fi-orange { background: var(--orange-faded); }
+    .fi-purple { background: var(--purple-faded); }
+    .fi-green  { background: #ECFDF5; }
+    .fi-blue   { background: #EFF6FF; }
+    .fi-yellow { background: #FFFBEB; }
+    .fi-pink   { background: #FDF2F8; }
+    .feature-title {
+      font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--text);
+    }
+    .feature-desc { font-size: 15px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── How It Works ── */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .step { text-align: center; position: relative; }
+    .step:not(:last-child)::after {
+      content: '→';
+      position: absolute; right: -24px; top: 32px;
+      font-size: 24px; color: var(--orange-light); font-weight: 700;
+    }
+    .step-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--orange-light));
+      color: var(--white); font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; box-shadow: 0 8px 24px rgba(255,140,0,.35);
+    }
+    .step-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .step-desc { font-size: 15px; color: var(--text-2); line-height: 1.6; }
+
+    /* ── Split Section ── */
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .split-content { }
+    .split-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--orange); margin-bottom: 16px;
+    }
+    .split-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(26px, 3.5vw, 38px); font-weight: 700;
+      line-height: 1.15; letter-spacing: -.02em;
+      margin-bottom: 18px;
+    }
+    .split-desc { font-size: 16px; color: var(--text-2); line-height: 1.7; margin-bottom: 28px; }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .check-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 15px; color: var(--text-2); line-height: 1.5;
+    }
+    .check-list li::before {
+      content: '✓';
+      min-width: 22px; height: 22px; border-radius: 50%;
+      background: var(--success); color: var(--white);
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px; flex-shrink: 0;
+    }
+    .split-visual {
+      background: linear-gradient(145deg, var(--orange-faded), var(--purple-faded));
+      border-radius: var(--radius-lg); padding: 40px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 340px;
+      border: 1.5px solid var(--border);
+    }
+    .split-visual-purple { background: linear-gradient(145deg, var(--purple-faded), #EFF6FF); }
+
+    /* Mini app card inside split visual */
+    .mini-card {
+      background: var(--white); border-radius: 16px;
+      padding: 20px; width: 100%; max-width: 280px;
+      box-shadow: var(--shadow-lg); border: 1.5px solid var(--border);
+    }
+    .mini-card + .mini-card { margin-top: 12px; }
+    .mini-row { display: flex; align-items: center; gap: 12px; }
+    .mini-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: var(--orange-faded);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .mini-title { font-size: 14px; font-weight: 700; color: var(--text); }
+    .mini-sub { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+    .mini-reward {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: var(--orange-faded); border-radius: 6px;
+      padding: 3px 8px; font-size: 12px; font-weight: 700; color: var(--orange-dark);
+      margin-top: 10px;
+    }
+    .mini-progress { height: 8px; background: #F0EBF8; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+    .mini-progress-fill { height: 100%; border-radius: 4px; }
+
+    /* ── Bitcoin Facts Ticker ── */
+    .facts-section { padding: 80px 0; background: var(--white); }
+    .facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .fact-card {
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      padding: 28px 22px; text-align: center;
+      transition: transform .2s, border-color .2s;
+    }
+    .fact-card:hover { transform: translateY(-3px); border-color: var(--orange-light); }
+    .fact-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px; font-weight: 700; color: var(--orange);
+      margin-bottom: 6px;
+    }
+    .fact-label { font-size: 14px; color: var(--text-2); }
+
+    /* ── Testimonials ── */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testimonial-card {
+      background: var(--white); border-radius: var(--radius-lg);
+      padding: 28px; border: 1.5px solid var(--border);
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"'; position: absolute; top: 16px; right: 24px;
+      font-size: 64px; color: var(--orange-faded);
+      font-family: Georgia, serif; line-height: 1; pointer-events: none;
+    }
+    .stars { color: #FBBF24; font-size: 16px; margin-bottom: 12px; }
+    .testimonial-text { font-size: 15px; color: var(--text-2); line-height: 1.65; margin-bottom: 18px; }
+    .testimonial-author { display: flex; align-items: center; gap: 10px; }
+    .author-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: var(--white); flex-shrink: 0;
+    }
+    .author-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .author-role { font-size: 12px; color: var(--text-muted); }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      padding: 100px 0;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, #2D1060 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '₿';
+      position: absolute; font-size: 600px; font-weight: 900;
+      color: rgba(255,140,0,.04); right: -80px; top: -100px;
+      line-height: 1; pointer-events: none; user-select: none;
+    }
+    .cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 5vw, 56px); font-weight: 700;
+      color: var(--white); margin-bottom: 18px; line-height: 1.1;
+      letter-spacing: -.02em;
+    }
+    .cta-sub { font-size: 18px; color: rgba(255,255,255,.6); margin-bottom: 44px; }
+    .cta-stores { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+    .store-btn-light {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,.1);
+      border: 1.5px solid rgba(255,255,255,.2);
+      color: var(--white); padding: 14px 24px; border-radius: 14px;
+      transition: background .2s, transform .15s;
+    }
+    .store-btn-light:hover { background: rgba(255,255,255,.18); transform: translateY(-2px); }
+    .cta-fine { font-size: 14px; color: rgba(255,255,255,.35); }
+    .cta-fine a { color: rgba(255,255,255,.55); text-decoration: underline; }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; background: none; border: none; padding: 22px 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 17px; font-weight: 600; color: var(--text);
+      cursor: pointer; text-align: left; gap: 16px;
+    }
+    .faq-q:hover { color: var(--orange); }
+    .faq-chevron { font-size: 20px; color: var(--orange); transition: transform .2s; flex-shrink: 0; }
+    .faq-a {
+      font-size: 15px; color: var(--text-2); line-height: 1.7;
+      padding-bottom: 20px; display: none;
+    }
+    .faq-item.open .faq-a { display: block; }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    /* ── Footer ── */
+    footer {
+      background: var(--bg-dark); color: rgba(255,255,255,.55);
+      padding: 60px 0 32px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .footer-brand .nav-logo { color: var(--white); margin-bottom: 14px; }
+    .footer-brand p { font-size: 14px; line-height: 1.65; max-width: 260px; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col a { font-size: 14px; color: rgba(255,255,255,.45); transition: color .2s; }
+    .footer-col a:hover { color: var(--orange); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,.08); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 13px; }
+    .footer-badges { display: flex; gap: 10px; }
+    .footer-badge {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px; padding: 6px 12px; font-size: 12px; color: rgba(255,255,255,.4);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: 1fr; }
+      .step:not(:last-child)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -24px; transform: translateX(-50%); }
+      .split { grid-template-columns: 1fr; }
+      .facts-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 540px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .facts-grid { grid-template-columns: 1fr 1fr; }
+      .hero-actions { flex-direction: column; }
+      .store-btn { justify-content: center; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .cta-stores { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="zap">⚡</div>
+        BitKids
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#parents">For Parents</a></li>
+        <li><a href="#kids">For Kids</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#download" class="btn btn-primary">Download Free</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="badge">⚡ Lightning Network Powered</span>
+        </div>
+        <h1 class="hero-headline">
+          Teach Your Kids Bitcoin,<br/>
+          <span class="highlight">One Sat at a Time</span>
+        </h1>
+        <p class="hero-sub">
+          BitKids is the family Bitcoin app where kids earn real satoshis by completing lessons and quizzes — while parents stay in full control of the wallet.
+        </p>
+        <div class="hero-actions">
+          <!-- ⬇ Replace href="#" with your App Store link when approved -->
+          <a href="#" class="store-btn" id="apple-store-btn">
+            <span class="store-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 384 512" fill="white"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></span>
+            <span class="store-text">
+              <span class="store-label">Download on the</span>
+              <span class="store-name">App Store</span>
+            </span>
+          </a>
+          <!-- ⬇ Replace href="#" with your Google Play link when approved -->
+          <a href="#" class="store-btn" id="google-play-btn">
+            <span class="store-icon"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 512 512"><path fill="#4FC3F7" d="M48 421.8V90.2c0-9.6 10.6-15.3 18.7-9.9L282 210.9l-67.2 67.2L48 421.8z"/><path fill="#F9A825" d="M356.3 234.6L282 210.9 48 421.8c1.5 1 3.2 1.5 4.8 1.5 4.4 0 8.8-2.1 11.5-6.1l292-183z"/><path fill="#E53935" d="M356.3 234.6l-74.3-23.7L66.7 80.3c-2.7-4-7.1-6.1-11.5-6.1-1.6 0-3.3.5-4.8 1.5L282 210.9l74.3 23.7z"/><path fill="#66BB6A" d="M356.3 234.6L64.2 417.6c-2.7 4-7.1 6.1-11.5 6.1-1.6 0-3.3-.5-4.8-1.5l165.9-144.1 74.3 23.7 68.2-67.2z"/></svg></span>
+            <span class="store-text">
+              <span class="store-label">Get it on</span>
+              <span class="store-name">Google Play</span>
+            </span>
+          </a>
+        </div>
+        <div class="hero-social-proof">
+          <div class="proof-avatars">
+            <span style="background:#FF8C00">J</span>
+            <span style="background:#7C3AED">M</span>
+            <span style="background:#10B981">S</span>
+            <span style="background:#3B82F6">R</span>
+            <span style="background:#EC4899">A</span>
+          </div>
+          <span>Join thousands of families already stacking sats 🚀</span>
+        </div>
+      </div>
+
+      <!-- Phone Mockups -->
+      <div class="hero-visual">
+        <div class="phone-stack">
+
+          <!-- Left phone: Parent view -->
+          <div class="phone phone-left">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="ps-header">
+                <div class="ps-greeting">Hello, James!</div>
+                <div class="ps-name">Family Overview</div>
+              </div>
+              <div class="ps-wallet-card">
+                <div class="ps-wallet-label">AVAILABLE BALANCE</div>
+                <div class="ps-wallet-amount">2,450 sats</div>
+                <div class="ps-wallet-sub">≈ $2.31 USD</div>
+              </div>
+              <div class="ps-section-label">Your Kids</div>
+              <div class="ps-child-card">
+                <div class="ps-child-avatar">T</div>
+                <div>
+                  <div class="ps-child-name">Tink</div>
+                  <div class="ps-child-hint">75 sats earned · 3 lessons</div>
+                </div>
+              </div>
+              <div class="ps-runway">
+                <div class="ps-runway-dot"></div>
+                <div class="ps-runway-text">Pool covers 4 more lesson rewards</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main phone: Child view -->
+          <div class="phone phone-main">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="ps-header">
+                <div class="ps-greeting">Hey Tink! Ready to stack sats?</div>
+              </div>
+              <div class="ps-stash-card">
+                <div class="ps-stash-label">MY STASH</div>
+                <div class="ps-stash-amount">75</div>
+                <div class="ps-stash-unit">Sats · ≈ $0.07</div>
+                <div class="ps-btns">
+                  <div class="ps-btn">⚡ Send</div>
+                  <div class="ps-btn">📷 Receive</div>
+                </div>
+              </div>
+              <div class="ps-section-label">Keep Learning</div>
+              <div class="ps-lesson-card">
+                <div class="ps-lesson-num">2</div>
+                <div class="ps-lesson-title">What is a Bitcoin Wallet?</div>
+                <div class="ps-lesson-desc">Learn how to store your sats safely</div>
+                <div class="ps-lesson-reward">⚡ 25 sats reward</div>
+              </div>
+              <div class="ps-section-label">My Goals</div>
+              <div class="ps-goal-card">
+                <div class="ps-goal-row">
+                  <div class="ps-goal-name">🎮 New Game</div>
+                  <div class="ps-goal-pct">38%</div>
+                </div>
+                <div class="ps-progress">
+                  <div class="ps-progress-fill" style="width:38%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right phone: Quiz view -->
+          <div class="phone phone-right">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <div class="ps-header">
+                <div class="ps-greeting">Quiz Time!</div>
+                <div class="ps-name">Question 2 of 3</div>
+              </div>
+              <div style="background:#2A1F4A;border-radius:12px;padding:12px;margin-bottom:10px;">
+                <div style="font-size:11px;color:#E8E0F0;font-weight:600;line-height:1.4;">Who created Bitcoin?</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px;">
+                <div style="background:#2A1F4A;border-radius:10px;padding:9px 10px;display:flex;align-items:center;gap:8px;border:1.5px solid #FF8C00;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:#FF8C00;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">A</div>
+                  <span style="font-size:11px;color:#fff;">Satoshi Nakamoto</span>
+                </div>
+                <div style="background:#2A1F4A;border-radius:10px;padding:9px 10px;display:flex;align-items:center;gap:8px;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:#3D2E60;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#A89BBE;flex-shrink:0;">B</div>
+                  <span style="font-size:11px;color:#A89BBE;">Elon Musk</span>
+                </div>
+                <div style="background:#2A1F4A;border-radius:10px;padding:9px 10px;display:flex;align-items:center;gap:8px;">
+                  <div style="width:22px;height:22px;border-radius:50%;background:#3D2E60;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#A89BBE;flex-shrink:0;">C</div>
+                  <span style="font-size:11px;color:#A89BBE;">Bill Gates</span>
+                </div>
+              </div>
+              <div style="margin-top:14px;background:linear-gradient(135deg,#FF8C00,#FFB347);border-radius:10px;padding:10px;text-align:center;font-size:12px;font-weight:700;color:#fff;">Submit Quiz ⚡</div>
+              <div style="margin-top:10px;background:rgba(16,185,129,.15);border-radius:10px;padding:10px;text-align:center;">
+                <div style="font-size:12px;font-weight:700;color:#10B981;">🎉 You just earned 25 sats!</div>
+                <div style="font-size:10px;color:#A89BBE;margin-top:2px;">Added to your stash!</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ STATS BAR ═══════════════ -->
+<div class="stats-bar">
+  <div class="container">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Real Bitcoin (sats)</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">21M</span>
+        <span class="stat-label">Bitcoin ever created</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">⚡</span>
+        <span class="stat-label">Lightning-fast payments</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">Free</span>
+        <span class="stat-label">Always free to download</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FEATURES ═══════════════ -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge" style="margin-bottom:16px;">✨ Everything You Need</span>
+      <h2 class="section-title">Built for the whole family</h2>
+      <p class="section-sub">One app, two experiences — powerful tools for parents, an engaging adventure for kids.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon fi-orange">📚</div>
+        <h3 class="feature-title">Earn Sats by Learning</h3>
+        <p class="feature-desc">Kids watch short Bitcoin lessons and pass quizzes to unlock real satoshi rewards — deposited instantly via the Lightning Network.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-purple">👨‍👩‍👧</div>
+        <h3 class="feature-title">Parental Controls</h3>
+        <p class="feature-desc">Set daily spending caps, require approval for purchases above a threshold, configure allowances, and manage lesson rewards — all from your dashboard.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-green">🎯</div>
+        <h3 class="feature-title">Savings Goals</h3>
+        <p class="feature-desc">Kids create goals like "New Headphones" or "Bike" and watch their sat stack grow toward it. Real-world saving habits, Bitcoin-style.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-blue">⚡</div>
+        <h3 class="feature-title">Lightning Wallet</h3>
+        <p class="feature-desc">Send and receive sats anywhere in the world using the Lightning Network. Kids can scan QR codes and experience real Bitcoin transactions.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-yellow">💰</div>
+        <h3 class="feature-title">Spend, Save & Reward</h3>
+        <p class="feature-desc">Three virtual buckets help kids understand money management — spend for day-to-day, save for goals, and reward for lesson earnings.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon fi-pink">📍</div>
+        <h3 class="feature-title">Find Bitcoin Merchants</h3>
+        <p class="feature-desc">An interactive map shows kids nearby stores and restaurants that accept Bitcoin — making spending their sats a real-world adventure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ HOW IT WORKS ═══════════════ -->
+<section class="section section-alt" id="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-purple" style="margin-bottom:16px;">🚀 Getting Started</span>
+      <h2 class="section-title">Up and running in 3 steps</h2>
+      <p class="section-sub">No Bitcoin experience needed. We guide you every step of the way.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3 class="step-title">Create a Family Account</h3>
+        <p class="step-desc">Sign up as a parent, then invite your child by sharing a simple code. Each child gets their own fun profile with a customizable avatar.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3 class="step-title">Fund &amp; Set Rewards</h3>
+        <p class="step-desc">Top up your Lightning wallet with sats, set a reward amount per lesson (e.g., 25 sats), and configure an allowance schedule. Takes under 2 minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3 class="step-title">Kids Learn &amp; Earn</h3>
+        <p class="step-desc">Your child watches lessons, answers quiz questions, and earns real sats — deposited into their stash automatically. No parental action needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOR PARENTS ═══════════════ -->
+<section class="section" id="parents">
+  <div class="container">
+    <div class="split">
+      <div class="split-content">
+        <div class="split-tag">👨‍👩‍👧 For Parents</div>
+        <h2 class="split-title">You're always in the driver's seat</h2>
+        <p class="split-desc">BitKids gives parents complete visibility and control over their child's Bitcoin activity — without the complexity of managing a Lightning node yourself.</p>
+        <ul class="check-list">
+          <li>Set how many sats each lesson is worth — from 1 sat to 1,000</li>
+          <li>Configure weekly or monthly allowances that auto-pay</li>
+          <li>Require your approval for any purchase above your chosen limit</li>
+          <li>Get notified instantly when your child earns a reward or requests to spend</li>
+          <li>See a runway warning before your reward pool runs dry</li>
+          <li>Allocate sats across Spend, Save, and Reward buckets</li>
+        </ul>
+      </div>
+      <div class="split-visual split-visual-purple">
+        <div style="width:100%;max-width:300px;">
+          <div class="mini-card">
+            <div class="mini-row">
+              <div class="mini-icon" style="background:var(--purple-faded);">🔔</div>
+              <div>
+                <div class="mini-title">Approval Request</div>
+                <div class="mini-sub">Tink wants to spend 150 sats</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;">
+              <div style="flex:1;background:#ECFDF5;border-radius:8px;padding:7px;text-align:center;font-size:13px;font-weight:700;color:#10B981;">✓ Approve</div>
+              <div style="flex:1;background:#FEF2F2;border-radius:8px;padding:7px;text-align:center;font-size:13px;font-weight:700;color:#EF4444;">✕ Deny</div>
+            </div>
+          </div>
+          <div class="mini-card" style="margin-top:12px;">
+            <div class="mini-row">
+              <div class="mini-icon">⚡</div>
+              <div>
+                <div class="mini-title">Reward Pool</div>
+                <div class="mini-sub">500 sats · covers 20 lessons</div>
+              </div>
+            </div>
+            <div class="mini-progress" style="margin-top:10px;">
+              <div class="mini-progress-fill" style="width:72%;background:linear-gradient(90deg,#FF8C00,#FFB347);"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:6px;">
+              <span style="font-size:11px;color:var(--text-2);">Used: 144 sats</span>
+              <span style="font-size:11px;color:var(--orange);font-weight:700;">20 lessons left</span>
+            </div>
+          </div>
+          <div class="mini-card" style="margin-top:12px;">
+            <div class="mini-row">
+              <div class="mini-icon" style="background:#FFFBEB;">🗓️</div>
+              <div>
+                <div class="mini-title">Allowance</div>
+                <div class="mini-sub">100 sats · every Sunday</div>
+              </div>
+            </div>
+            <div style="margin-top:8px;font-size:12px;color:var(--text-2);">Next payout: <strong style="color:var(--orange);">Sunday, Feb 23</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOR KIDS ═══════════════ -->
+<section class="section section-alt" id="kids">
+  <div class="container">
+    <div class="split" style="direction:rtl;">
+      <div class="split-content" style="direction:ltr;">
+        <div class="split-tag">🧒 For Kids</div>
+        <h2 class="split-title">Learning that actually pays off</h2>
+        <p class="split-desc">BitKids makes Bitcoin education feel like a game — with real rewards, savings goals, and the thrill of watching your stash grow.</p>
+        <ul class="check-list">
+          <li>Watch short, fun video lessons about Bitcoin and money</li>
+          <li>Answer quiz questions and earn real sats instantly</li>
+          <li>Set savings goals and track progress with an XP bar</li>
+          <li>Send sats to friends and family with a QR code scanner</li>
+          <li>Explore a map of Bitcoin-accepting stores nearby</li>
+          <li>Convert between sats, BTC, and USD in a built-in calculator</li>
+        </ul>
+      </div>
+      <div class="split-visual" style="direction:ltr;">
+        <div style="width:100%;max-width:300px;">
+          <div class="mini-card">
+            <div class="mini-row">
+              <div class="mini-icon">🎉</div>
+              <div>
+                <div class="mini-title">You just earned!</div>
+                <div class="mini-sub">What is a Bitcoin Wallet?</div>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:14px;">
+              <div style="font-size:36px;font-weight:900;color:var(--orange);">25</div>
+              <div style="font-size:13px;color:var(--text-2);">Sats added to your stash!</div>
+            </div>
+            <div style="background:var(--orange-faded);border-radius:10px;padding:8px 12px;margin-top:12px;display:flex;align-items:center;gap:8px;">
+              <span style="font-size:18px;">✓</span>
+              <span style="font-size:13px;font-weight:700;color:var(--orange-dark);">Reward Deposited</span>
+            </div>
+          </div>
+          <div class="mini-card" style="margin-top:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <div style="font-size:14px;font-weight:700;">🎮 Gaming PC</div>
+              <div style="font-size:13px;font-weight:700;color:var(--orange);">23%</div>
+            </div>
+            <div class="mini-progress">
+              <div class="mini-progress-fill" style="width:23%;background:linear-gradient(90deg,#FF8C00,#FFB347);"></div>
+            </div>
+            <div style="font-size:12px;color:var(--text-2);margin-top:6px;">575 / 2,500 sats · 79 lessons to go</div>
+          </div>
+          <div class="mini-card" style="margin-top:12px;">
+            <div class="mini-row">
+              <div class="mini-icon" style="background:#ECFEFF;">📍</div>
+              <div>
+                <div class="mini-title">Bitcoin Spots Nearby</div>
+                <div class="mini-sub">3 stores accept sats near you</div>
+              </div>
+            </div>
+            <div style="margin-top:10px;height:60px;background:linear-gradient(135deg,#ECFEFF,#EFF6FF);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;">🗺️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ BITCOIN FACTS ═══════════════ -->
+<section class="facts-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge" style="margin-bottom:16px;">₿ Did You Know?</span>
+      <h2 class="section-title">Bitcoin by the numbers</h2>
+      <p class="section-sub">The facts your kids will learn — and the financial head-start you'll give them.</p>
+    </div>
+    <div class="facts-grid">
+      <div class="fact-card">
+        <div class="fact-num">21M</div>
+        <div class="fact-label">Maximum Bitcoin ever to exist</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">100M</div>
+        <div class="fact-label">Satoshis in 1 Bitcoin</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">2009</div>
+        <div class="fact-label">Year Bitcoin was created</div>
+      </div>
+      <div class="fact-card">
+        <div class="fact-num">⚡ &lt;1s</div>
+        <div class="fact-label">Lightning Network settlement time</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
+<section class="section section-alt" id="reviews">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-purple" style="margin-bottom:16px;">💬 From Families</span>
+      <h2 class="section-title">Parents &amp; kids love BitKids</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">My son asks ME about Bitcoin now. He's 9. He earned 200 sats last week just from lessons and wouldn't stop talking about Satoshi Nakamoto at dinner.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#FF8C00;">M</div>
+          <div>
+            <div class="author-name">Marcus T.</div>
+            <div class="author-role">Father of two · Dallas, TX</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Finally an app that teaches real financial literacy. My daughter has been saving her sats for three months to hit her goal. She's more patient with money than I am.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#7C3AED;">S</div>
+          <div>
+            <div class="author-name">Sandra K.</div>
+            <div class="author-role">Mother of one · Atlanta, GA</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">The parental controls are exactly what I needed. I can see everything, approve big purchases, and set the reward amounts. It's like a Bitcoin allowance app but actually fun.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:#10B981;">D</div>
+          <div>
+            <div class="author-name">David R.</div>
+            <div class="author-role">Father of three · Miami, FL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FAQ ═══════════════ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge" style="margin-bottom:16px;">❓ Common Questions</span>
+      <h2 class="section-title">Frequently asked questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Do my kids get real Bitcoin?
+          <span class="faq-chevron">⌄</span>
+        </button>
+        <div class="faq-a">Yes — 100% real Bitcoin satoshis, settled on the Lightning Network. When your child earns a lesson reward, it's credited from your family wallet directly to their stash. They can send those sats to any Lightning wallet in the world.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How do I fund the wallet?
+          <span class="faq-chevron">⌄</span>
+        </button>
+        <div class="faq-a">From the parent dashboard, tap "Fund Wallet" and scan a Lightning invoice with any Bitcoin wallet (Strike, Cash App, Blue Wallet, etc.). Sats arrive in seconds. You can top up as little or as often as you like.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Is my child's wallet safe?
+          <span class="faq-chevron">⌄</span>
+        </button>
+        <div class="faq-a">BitKids uses a custodial model — your child's sats are held in your parent wallet and tracked virtually. This means you remain in full custody of the funds and can set spending limits. No private keys for children to lose.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          What age is BitKids for?
+          <span class="faq-chevron">⌄</span>
+        </button>
+        <div class="faq-a">BitKids is designed for children ages 6–16. The lessons are explained in simple, engaging language. Younger kids will need a little parental guidance; older teens can navigate the app independently.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Can my child spend sats without my permission?
+          <span class="faq-chevron">⌄</span>
+        </button>
+        <div class="faq-a">You set the rules. Configure a daily spending cap and a threshold above which every purchase requires your approval. You'll get an instant push notification for any approval request so you're always in the loop.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          How much does BitKids cost?
+          <span class="faq-chevron">⌄</span>
+        </button>
+        <div class="faq-a">BitKids is completely free to download and use. The only Bitcoin you need is what you fund into your family wallet for rewards and allowances — that's real money going to your kids, not to us.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Does my child need a smartphone?
+          <span class="faq-chevron">⌄</span>
+        </button>
+        <div class="faq-a">BitKids is available on iOS and Android. Your child will need access to a smartphone or tablet to use the app. We recommend supervised usage for younger children.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ DOWNLOAD CTA ═══════════════ -->
+<section class="cta-section" id="download">
+  <div class="container" style="position:relative;z-index:1;">
+    <span class="badge" style="margin-bottom:24px;background:rgba(255,140,0,.15);border-color:rgba(255,140,0,.4);color:var(--orange);">🚀 Free Download</span>
+    <h2 class="cta-title">
+      Give your kids a head start<br/>
+      <span style="color:var(--orange);">on the Bitcoin standard</span>
+    </h2>
+    <p class="cta-sub">Free to download. Real sats. Real lessons. Real financial future.</p>
+    <div class="cta-stores">
+      <!-- ⬇ Replace href="#" with your App Store link when approved -->
+      <a href="#" class="store-btn-light store-btn" id="apple-cta-btn">
+        <span class="store-icon"></span>
+        <span class="store-text">
+          <span class="store-label">Download on the</span>
+          <span class="store-name">App Store</span>
+        </span>
+      </a>
+      <!-- ⬇ Replace href="#" with your Google Play link when approved -->
+      <a href="#" class="store-btn-light store-btn" id="google-cta-btn">
+        <span class="store-icon">▶</span>
+        <span class="store-text">
+          <span class="store-label">Get it on</span>
+          <span class="store-name">Google Play</span>
+        </span>
+      </a>
+    </div>
+    <p class="cta-fine">Available on iOS 16+ and Android 10+. No credit card required. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></p>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="margin-bottom:14px;">
+          <div class="zap">⚡</div>
+          BitKids
+        </div>
+        <p>The family Bitcoin app. Teach your kids financial literacy through real, hands-on experience with the Lightning Network.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#download">Download</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>For Families</h4>
+        <ul>
+          <li><a href="#parents">For Parents</a></li>
+          <li><a href="#kids">For Kids</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="support.html">Support</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="privacy.html">Cookie Policy</a></li>
+          <li><a href="support.html">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 BitKids. All rights reserved. Bitcoin is not a toy — but learning about it should be.</p>
+      <div class="footer-badges">
+        <div class="footer-badge">⚡ Lightning Network</div>
+        <div class="footer-badge">🔒 Non-Custodial Option</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Smooth active nav link highlighting
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute('href') === '#' + entry.target.id
+            ? 'var(--orange)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => observer.observe(s));
+
+  // Store button links — update these when app store links are approved
+  // To update: replace the '#' in each href below with your real URL
+  const APPLE_URL  = '#'; // e.g. 'https://apps.apple.com/app/bitkids/id...'
+  const GOOGLE_URL = '#'; // e.g. 'https://play.google.com/store/apps/details?id=...'
+  ['apple-store-btn','apple-cta-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = APPLE_URL;
+  });
+  ['google-play-btn','google-cta-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.href = GOOGLE_URL;
+  });
+</script>
+
+</body>
+</html>

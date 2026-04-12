@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BitKids App Store Screenshot Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F5F3EF;
+      color: #1A1033;
+      padding: 40px;
+    }
+
+    /* --- Instructions Banner --- */
+    .instructions {
+      background: #FFFBF5;
+      border: 2px solid #FF8C00;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .instructions h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: #1A1033;
+      margin-bottom: 12px;
+    }
+
+    .instructions h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: #1A1033;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    .instructions ol, .instructions ul {
+      padding-left: 24px;
+      line-height: 1.8;
+      font-size: 15px;
+      color: #444;
+    }
+
+    .instructions code {
+      background: #F0ECE4;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    /* --- Preview Grid --- */
+    .grid-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 32px;
+      color: #1A1033;
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto 80px;
+    }
+
+    .preview-card {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .preview-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    }
+
+    .preview-card .card-inner {
+      aspect-ratio: 1290 / 2796;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6% 5% 4%;
+      position: relative;
+    }
+
+    /* --- Full-Size Export Section --- */
+    .export-section {
+      margin-top: 60px;
+      border-top: 3px solid #E0DCD4;
+      padding-top: 40px;
+    }
+
+    .export-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 12px;
+      color: #1A1033;
+    }
+
+    .export-subtitle {
+      text-align: center;
+      color: #666;
+      font-size: 15px;
+      margin-bottom: 40px;
+    }
+
+    .export-cards {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 60px;
+    }
+
+    .export-card {
+      width: 1290px;
+      height: 2796px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .export-card .card-inner {
+      width: 1290px;
+      height: 2796px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 80px 65px 50px;
+      position: relative;
+    }
+
+    /* --- Shared Card Content Styles --- */
+
+    /* Logo */
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.92);
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preview-card .logo {
+      font-size: 16px;
+      margin-bottom: 6%;
+    }
+
+    .export-card .logo {
+      font-size: 52px;
+      margin-bottom: 60px;
+    }
+
+    .logo .bolt {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+    }
+
+    .preview-card .logo .bolt {
+      width: 28px;
+      height: 28px;
+      font-size: 16px;
+    }
+
+    .export-card .logo .bolt {
+      width: 72px;
+      height: 72px;
+      font-size: 42px;
+    }
+
+    /* Headline */
+    .headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: #fff;
+      text-align: center;
+      line-height: 1.1;
+      letter-spacing: -1px;
+    }
+
+    .preview-card .headline {
+      font-size: clamp(14px, 2.2vw, 28px);
+      margin-bottom: 2%;
+    }
+
+    .export-card .headline {
+      font-size: 96px;
+      margin-bottom: 28px;
+      max-width: 1050px;
+    }
+
+    /* Subtitle */
+    .subtitle {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.78);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .preview-card .subtitle {
+      font-size: clamp(8px, 1.1vw, 14px);
+      margin-bottom: 5%;
+      max-width: 85%;
+    }
+
+    .export-card .subtitle {
+      font-size: 42px;
+      margin-bottom: 80px;
+      max-width: 900px;
+    }
+
+    /* Phone Frame */
+    .phone-frame {
+      background: #fff;
+      border-radius: 40px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-height: 0;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    .preview-card .phone-frame {
+      width: 85%;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .export-card .phone-frame {
+      width: 1060px;
+      border-radius: 52px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+    }
+
+    /* Notch */
+    .phone-notch {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      background: #fff;
+    }
+
+    .phone-notch-inner {
+      background: #1A1033;
+      border-radius: 0 0 20px 20px;
+    }
+
+    .preview-card .phone-notch {
+      padding-top: 6px;
+    }
+
+    .preview-card .phone-notch-inner {
+      width: 80px;
+      height: 16px;
+      border-radius: 0 0 10px 10px;
+    }
+
+    .export-card .phone-notch {
+      padding-top: 12px;
+    }
+
+    .export-card .phone-notch-inner {
+      width: 200px;
+      height: 40px;
+      border-radius: 0 0 22px 22px;
+    }
+
+    /* Placeholder */
+    .phone-placeholder {
+      flex: 1;
+      background: #F0ECE4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #999;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+    }
+
+    .preview-card .phone-placeholder {
+      font-size: 10px;
+      padding: 10px;
+    }
+
+    .export-card .phone-placeholder {
+      font-size: 36px;
+      padding: 40px;
+      line-height: 1.5;
+    }
+
+    .phone-placeholder .drop-icon {
+      display: block;
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+
+    .preview-card .phone-placeholder .drop-icon {
+      font-size: 20px;
+    }
+
+    .export-card .phone-placeholder .drop-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+    }
+
+    /* --- Gradient Definitions --- */
+    .gradient-1 .card-inner { background: linear-gradient(170deg, #FF8C00 0%, #FFB84D 100%); }
+    .gradient-2 .card-inner { background: linear-gradient(170deg, #7C3AED 0%, #3B82F6 100%); }
+    .gradient-3 .card-inner { background: linear-gradient(170deg, #22C55E 0%, #14B8A6 100%); }
+    .gradient-4 .card-inner { background: linear-gradient(170deg, #FF8C00 0%, #EC4899 100%); }
+    .gradient-5 .card-inner { background: linear-gradient(170deg, #7C3AED 0%, #4338CA 100%); }
+    .gradient-6 .card-inner { background: linear-gradient(170deg, #3B82F6 0%, #06B6D4 100%); }
+
+    /* --- Export Label --- */
+    .export-label {
+      text-align: center;
+      font-size: 14px;
+      color: #888;
+      margin-top: 8px;
+      margin-bottom: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* --- Print Styles --- */
+    @media print {
+      body { padding: 0; background: #fff; }
+      .instructions, .preview-grid, .grid-title, .export-section > .export-title,
+      .export-section > .export-subtitle, .export-label { display: none; }
+      .export-section { border: none; padding: 0; margin: 0; }
+      .export-card { page-break-after: always; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Instructions -->
+  <div class="instructions">
+    <h1>BitKids App Store Screenshot Generator</h1>
+    <h2>To generate final screenshots:</h2>
+    <ol>
+      <li>Replace the gray placeholder areas below with actual app screenshots (edit the HTML or use CSS background-image on <code>.phone-placeholder</code>).</li>
+      <li>Scroll down to the <strong>Full-Size Export</strong> section where each card renders at the exact 1290x2796px dimensions.</li>
+      <li>Open browser DevTools (F12), click the device toolbar, and set a custom resolution of <code>1290 x 2796</code>.</li>
+      <li>Isolate each export card (hide the others) and take a full-page screenshot, or use <code>Ctrl+Shift+P</code> &gt; "Capture node screenshot" on each <code>.export-card</code> element.</li>
+      <li>The resulting PNGs are ready to upload to App Store Connect and Google Play Console.</li>
+    </ol>
+    <h2>Quick tip</h2>
+    <ul>
+      <li>To insert a real screenshot, add <code>style="background: url('your-image.png') center/cover no-repeat"</code> to the <code>.phone-placeholder</code> div and remove its inner text.</li>
+    </ul>
+  </div>
+
+  <!-- Preview Grid -->
+  <h2 class="grid-title">Preview (scaled down)</h2>
+  <div class="preview-grid">
+
+    <!-- Card 1 -->
+    <div class="preview-card gradient-1">
+      <div class="card-inner">
+        <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+        <div class="headline">Track Your Family's Bitcoin Journey</div>
+        <div class="subtitle">See balances, allowances, and savings goals for every family member in one place.</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+          <div class="phone-placeholder">
+            <div><span class="drop-icon">&#128247;</span>Drop Parent Dashboard<br>screenshot here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="preview-card gradient-2">
+      <div class="card-inner">
+        <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+        <div class="headline">Kids Earn Real Bitcoin</div>
+        <div class="subtitle">Complete chores, hit milestones, and stack sats along the way.</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+          <div class="phone-placeholder">
+            <div><span class="drop-icon">&#128247;</span>Drop Child Dashboard<br>screenshot here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="preview-card gradient-3">
+      <div class="card-inner">
+        <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+        <div class="headline">Fun Bitcoin Lessons</div>
+        <div class="subtitle">Interactive lessons that teach kids about money, saving, and Bitcoin.</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+          <div class="phone-placeholder">
+            <div><span class="drop-icon">&#128247;</span>Drop Learn Screen<br>screenshot here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="preview-card gradient-4">
+      <div class="card-inner">
+        <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+        <div class="headline">Set Savings Goals</div>
+        <div class="subtitle">Kids pick a goal, track progress, and celebrate when they reach it.</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+          <div class="phone-placeholder">
+            <div><span class="drop-icon">&#128247;</span>Drop Goals Screen<br>screenshot here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="preview-card gradient-5">
+      <div class="card-inner">
+        <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+        <div class="headline">Lightning-Fast Payments</div>
+        <div class="subtitle">Send and receive Bitcoin instantly with the Lightning Network.</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+          <div class="phone-placeholder">
+            <div><span class="drop-icon">&#128247;</span>Drop Wallet Screen<br>screenshot here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="preview-card gradient-6">
+      <div class="card-inner">
+        <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+        <div class="headline">Find Places to Spend</div>
+        <div class="subtitle">Discover Bitcoin-friendly shops, restaurants, and experiences nearby.</div>
+        <div class="phone-frame">
+          <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+          <div class="phone-placeholder">
+            <div><span class="drop-icon">&#128247;</span>Drop Spend Map Screen<br>screenshot here</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Full-Size Export Section -->
+  <div class="export-section">
+    <h2 class="export-title">Full-Size Export (1290 x 2796px each)</h2>
+    <p class="export-subtitle">Right-click an export card &gt; Inspect &gt; right-click the node &gt; "Capture node screenshot" to save at exact pixel dimensions.</p>
+
+    <div class="export-cards">
+
+      <!-- Export Card 1 -->
+      <div class="export-card gradient-1" id="export-1">
+        <div class="card-inner">
+          <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+          <div class="headline">Track Your Family's Bitcoin Journey</div>
+          <div class="subtitle">See balances, allowances, and savings goals for every family member in one place.</div>
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+            <div class="phone-placeholder">
+              <div><span class="drop-icon">&#128247;</span>Drop Parent Dashboard screenshot here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="export-label">1 / 6 — Parent Dashboard</p>
+
+      <!-- Export Card 2 -->
+      <div class="export-card gradient-2" id="export-2">
+        <div class="card-inner">
+          <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+          <div class="headline">Kids Earn Real Bitcoin</div>
+          <div class="subtitle">Complete chores, hit milestones, and stack sats along the way.</div>
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+            <div class="phone-placeholder">
+              <div><span class="drop-icon">&#128247;</span>Drop Child Dashboard screenshot here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="export-label">2 / 6 — Child Dashboard</p>
+
+      <!-- Export Card 3 -->
+      <div class="export-card gradient-3" id="export-3">
+        <div class="card-inner">
+          <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+          <div class="headline">Fun Bitcoin Lessons</div>
+          <div class="subtitle">Interactive lessons that teach kids about money, saving, and Bitcoin.</div>
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+            <div class="phone-placeholder">
+              <div><span class="drop-icon">&#128247;</span>Drop Learn Screen screenshot here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="export-label">3 / 6 — Learn Screen</p>
+
+      <!-- Export Card 4 -->
+      <div class="export-card gradient-4" id="export-4">
+        <div class="card-inner">
+          <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+          <div class="headline">Set Savings Goals</div>
+          <div class="subtitle">Kids pick a goal, track progress, and celebrate when they reach it.</div>
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+            <div class="phone-placeholder">
+              <div><span class="drop-icon">&#128247;</span>Drop Goals Screen screenshot here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="export-label">4 / 6 — Goals Screen</p>
+
+      <!-- Export Card 5 -->
+      <div class="export-card gradient-5" id="export-5">
+        <div class="card-inner">
+          <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+          <div class="headline">Lightning-Fast Payments</div>
+          <div class="subtitle">Send and receive Bitcoin instantly with the Lightning Network.</div>
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+            <div class="phone-placeholder">
+              <div><span class="drop-icon">&#128247;</span>Drop Wallet Screen screenshot here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="export-label">5 / 6 — Wallet Screen</p>
+
+      <!-- Export Card 6 -->
+      <div class="export-card gradient-6" id="export-6">
+        <div class="card-inner">
+          <div class="logo"><span class="bolt">&#9889;</span> BitKids</div>
+          <div class="headline">Find Places to Spend</div>
+          <div class="subtitle">Discover Bitcoin-friendly shops, restaurants, and experiences nearby.</div>
+          <div class="phone-frame">
+            <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+            <div class="phone-placeholder">
+              <div><span class="drop-icon">&#128247;</span>Drop Spend Map Screen screenshot here</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="export-label">6 / 6 — Spend Map Screen</p>
+
+    </div>
+  </div>
+
+</body>
+</html>
