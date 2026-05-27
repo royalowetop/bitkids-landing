@@ -8,6 +8,9 @@
   <meta property="og:title" content="BitKids — Bitcoin Education for Kids" />
   <meta property="og:description" content="Kids earn real Bitcoin (sats) by learning. Parents stay in control. Everyone wins." />
   <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://bitkids.app/screenshots/child-dashboard.png" />
+  <link rel="icon" href="/bitkids-logo-180.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/bitkids-logo-180.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -200,6 +203,12 @@
       background: #2A1F4A; border-radius: 3px;
     }
     .phone-screen { padding: 0 14px 20px; }
+    .phone-screenshot {
+      display: block; width: calc(100% - 12px);
+      margin: 4px auto 6px; border-radius: 18px;
+      object-fit: cover; object-position: top center;
+      aspect-ratio: 9 / 19.5;
+    }
     .phone-main {
       left: 50%; top: 0;
       transform: translateX(-50%);
@@ -579,7 +588,7 @@
   <div class="container">
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <img src="bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" />
+        <img src="/bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" />
         BitKids
       </a>
       <ul class="nav-links">
@@ -641,105 +650,23 @@
         </div>
       </div>
 
-      <!-- Phone Mockups -->
+      <!-- Phone Mockups (real app screenshots) -->
       <div class="hero-visual">
         <div class="phone-stack">
 
-          <!-- Left phone: Parent view -->
           <div class="phone phone-left">
             <div class="phone-notch"></div>
-            <div class="phone-screen">
-              <div class="ps-header">
-                <div class="ps-greeting">Hello, James!</div>
-                <div class="ps-name">Family Overview</div>
-              </div>
-              <div class="ps-wallet-card">
-                <div class="ps-wallet-label">AVAILABLE BALANCE</div>
-                <div class="ps-wallet-amount">2,450 sats</div>
-                <div class="ps-wallet-sub">≈ $2.31 USD</div>
-              </div>
-              <div class="ps-section-label">Your Kids</div>
-              <div class="ps-child-card">
-                <div class="ps-child-avatar">T</div>
-                <div>
-                  <div class="ps-child-name">Tink</div>
-                  <div class="ps-child-hint">75 sats earned · 3 lessons</div>
-                </div>
-              </div>
-              <div class="ps-runway">
-                <div class="ps-runway-dot"></div>
-                <div class="ps-runway-text">Pool covers 4 more lesson rewards</div>
-              </div>
-            </div>
+            <img src="/screenshots/parent-dashboard.png" alt="BitKids parent dashboard" class="phone-screenshot" width="260" height="563" />
           </div>
 
-          <!-- Main phone: Child view -->
           <div class="phone phone-main">
             <div class="phone-notch"></div>
-            <div class="phone-screen">
-              <div class="ps-header">
-                <div class="ps-greeting">Hey Tink! Ready to stack sats?</div>
-              </div>
-              <div class="ps-stash-card">
-                <div class="ps-stash-label">MY STASH</div>
-                <div class="ps-stash-amount">75</div>
-                <div class="ps-stash-unit">Sats · ≈ $0.07</div>
-                <div class="ps-btns">
-                  <div class="ps-btn">⚡ Send</div>
-                  <div class="ps-btn">📷 Receive</div>
-                </div>
-              </div>
-              <div class="ps-section-label">Keep Learning</div>
-              <div class="ps-lesson-card">
-                <div class="ps-lesson-num">2</div>
-                <div class="ps-lesson-title">What is a Bitcoin Wallet?</div>
-                <div class="ps-lesson-desc">Learn how to store your sats safely</div>
-                <div class="ps-lesson-reward">⚡ 25 sats reward</div>
-              </div>
-              <div class="ps-section-label">My Goals</div>
-              <div class="ps-goal-card">
-                <div class="ps-goal-row">
-                  <div class="ps-goal-name">🎮 New Game</div>
-                  <div class="ps-goal-pct">38%</div>
-                </div>
-                <div class="ps-progress">
-                  <div class="ps-progress-fill" style="width:38%"></div>
-                </div>
-              </div>
-            </div>
+            <img src="/screenshots/child-dashboard.png" alt="BitKids child dashboard" class="phone-screenshot" width="280" height="607" />
           </div>
 
-          <!-- Right phone: Quiz view -->
           <div class="phone phone-right">
             <div class="phone-notch"></div>
-            <div class="phone-screen">
-              <div class="ps-header">
-                <div class="ps-greeting">Quiz Time!</div>
-                <div class="ps-name">Question 2 of 3</div>
-              </div>
-              <div style="background:#2A1F4A;border-radius:12px;padding:12px;margin-bottom:10px;">
-                <div style="font-size:11px;color:#E8E0F0;font-weight:600;line-height:1.4;">Who created Bitcoin?</div>
-              </div>
-              <div style="display:flex;flex-direction:column;gap:7px;">
-                <div style="background:#2A1F4A;border-radius:10px;padding:9px 10px;display:flex;align-items:center;gap:8px;border:1.5px solid #FF8C00;">
-                  <div style="width:22px;height:22px;border-radius:50%;background:#FF8C00;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;">A</div>
-                  <span style="font-size:11px;color:#fff;">Satoshi Nakamoto</span>
-                </div>
-                <div style="background:#2A1F4A;border-radius:10px;padding:9px 10px;display:flex;align-items:center;gap:8px;">
-                  <div style="width:22px;height:22px;border-radius:50%;background:#3D2E60;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#A89BBE;flex-shrink:0;">B</div>
-                  <span style="font-size:11px;color:#A89BBE;">Elon Musk</span>
-                </div>
-                <div style="background:#2A1F4A;border-radius:10px;padding:9px 10px;display:flex;align-items:center;gap:8px;">
-                  <div style="width:22px;height:22px;border-radius:50%;background:#3D2E60;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#A89BBE;flex-shrink:0;">C</div>
-                  <span style="font-size:11px;color:#A89BBE;">Bill Gates</span>
-                </div>
-              </div>
-              <div style="margin-top:14px;background:linear-gradient(135deg,#FF8C00,#FFB347);border-radius:10px;padding:10px;text-align:center;font-size:12px;font-weight:700;color:#fff;">Submit Quiz ⚡</div>
-              <div style="margin-top:10px;background:rgba(16,185,129,.15);border-radius:10px;padding:10px;text-align:center;">
-                <div style="font-size:12px;font-weight:700;color:#10B981;">🎉 You just earned 25 sats!</div>
-                <div style="font-size:10px;color:#A89BBE;margin-top:2px;">Added to your stash!</div>
-              </div>
-            </div>
+            <img src="/screenshots/learn-screen.png" alt="BitKids learn screen" class="phone-screenshot" width="260" height="563" />
           </div>
 
         </div>
@@ -1144,7 +1071,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo" style="margin-bottom:14px;">
-          <img src="bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" />
+          <img src="/bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" />
           BitKids
         </div>
         <p>The family Bitcoin app. Teach your kids financial literacy through real, hands-on experience with the Lightning Network.</p>
