@@ -204,10 +204,14 @@
     }
     .phone-screen { padding: 0 14px 20px; }
     .phone-screenshot {
-      display: block; width: calc(100% - 12px);
-      margin: 4px auto 6px; border-radius: 18px;
-      object-fit: cover; object-position: top center;
-      aspect-ratio: 9 / 19.5;
+      display: block;
+      width: calc(100% - 12px);
+      height: calc(100% - 34px);
+      margin: 4px auto 6px;
+      border-radius: 18px;
+      object-fit: contain;
+      object-position: top center;
+      background: #FFFBF5;
     }
     .phone-main {
       left: 50%; top: 0;
@@ -656,17 +660,17 @@
 
           <div class="phone phone-left">
             <div class="phone-notch"></div>
-            <img src="/screenshots/parent-dashboard.png" alt="BitKids parent dashboard" class="phone-screenshot" width="260" height="563" />
+            <img src="/screenshots/parent-dashboard.png?v=2" alt="BitKids parent dashboard" class="phone-screenshot" width="260" height="520" loading="eager" decoding="async" />
           </div>
 
           <div class="phone phone-main">
             <div class="phone-notch"></div>
-            <img src="/screenshots/child-dashboard.png" alt="BitKids child dashboard" class="phone-screenshot" width="280" height="607" />
+            <img src="/screenshots/child-dashboard.png?v=2" alt="BitKids child dashboard" class="phone-screenshot" width="280" height="520" loading="eager" decoding="async" />
           </div>
 
           <div class="phone phone-right">
             <div class="phone-notch"></div>
-            <img src="/screenshots/learn-screen.png" alt="BitKids learn screen" class="phone-screenshot" width="260" height="563" />
+            <img src="/screenshots/learn-screen.png?v=2" alt="BitKids learn screen" class="phone-screenshot" width="260" height="520" loading="eager" decoding="async" />
           </div>
 
         </div>
