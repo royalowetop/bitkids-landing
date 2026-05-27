@@ -77,10 +77,25 @@
       display: flex; align-items: center; justify-content: space-between;
       height: 68px;
     }
+    .nav-brand-group {
+      display: flex; align-items: center; gap: 12px;
+    }
     .nav-logo {
       display: flex; align-items: center; gap: 10px;
       font-family: 'Space Grotesk', sans-serif;
       font-size: 22px; font-weight: 700; color: var(--text);
+    }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; color: var(--text-muted);
+      padding: 5px 10px; border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: color .2s, border-color .2s, background .2s;
+    }
+    .nav-back:hover {
+      color: var(--text-2);
+      border-color: var(--purple-light);
+      background: var(--white);
     }
     .nav-logo-img {
       width: 36px; height: 36px; border-radius: 10px;
@@ -595,10 +610,19 @@
 <nav>
   <div class="container">
     <div class="nav-inner">
-      <a href="#" class="nav-logo">
-        <img src="/bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" width="36" height="36" />
-        BitKids
-      </a>
+      <div class="nav-brand-group">
+        <a href="/" class="nav-logo">
+          <img src="/bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" width="36" height="36" />
+          BitKids
+        </a>
+        <a href="https://jtrlabs.com/" class="nav-back" target="_blank" rel="noopener" aria-label="Back to JTR Labs">
+          <svg width="13" height="13" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="1" y="1" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M6 4 L6 11 Q6 13 8 13 L10 13" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/>
+          </svg>
+          JTR Labs
+        </a>
+      </div>
       <ul class="nav-links">
         <li><a href="#features">Features</a></li>
         <li><a href="#how-it-works">How It Works</a></li>
