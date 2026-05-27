@@ -8,7 +8,7 @@
   <meta property="og:title" content="BitKids — Bitcoin Education for Kids" />
   <meta property="og:description" content="Kids earn real Bitcoin (sats) by learning. Parents stay in control. Everyone wins." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://bitkids.app/screenshots/child-ui.png" />
+  <meta property="og:image" content="https://bitkids.app/screenshots/child-dashboard.png" />
   <link rel="icon" href="/bitkids-logo-180.png" type="image/png" />
   <link rel="apple-touch-icon" href="/bitkids-logo-180.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -194,28 +194,17 @@
       display: flex;
       flex-direction: column;
     }
-    .phone-notch {
-      width: 90px; height: 24px; background: var(--bg-dark);
-      border-radius: 0 0 16px 16px; margin: 0 auto;
-      position: relative; z-index: 2;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .phone-notch::before {
-      content: ''; width: 50px; height: 5px;
-      background: #2A1F4A; border-radius: 3px;
-    }
-    .phone-screen { padding: 0 14px 20px; }
-    .phone-screen-img {
-      flex: 1;
+    /* Full-device screenshots include status bar; no extra notch overlay */
+    .phone-screenshot {
       display: block;
-      width: calc(100% - 12px);
-      margin: 0 auto 8px;
-      border-radius: 18px;
-      object-fit: contain;
+      width: calc(100% - 10px);
+      margin: 6px auto 8px;
+      border-radius: 22px;
+      object-fit: cover;
       object-position: top center;
-      background: #FFFBF5;
-      min-height: 380px;
-      max-height: 480px;
+      aspect-ratio: 9 / 19.5;
+      flex: 1;
+      min-height: 0;
     }
     .phone-main {
       left: 50%; top: 0;
@@ -674,18 +663,15 @@
         <div class="phone-stack">
 
           <div class="phone phone-left">
-            <div class="phone-notch"></div>
-            <img src="/parent-ui.png" alt="BitKids parent dashboard" class="phone-screen-img" width="228" height="494" loading="eager" decoding="async" />
+            <img src="/screenshots/parent-dashboard.png" alt="BitKids parent dashboard" class="phone-screenshot" width="228" height="494" loading="eager" decoding="async" />
           </div>
 
           <div class="phone phone-main">
-            <div class="phone-notch"></div>
-            <img src="/child-ui.png" alt="BitKids child dashboard" class="phone-screen-img" width="228" height="494" loading="eager" decoding="async" />
+            <img src="/screenshots/child-dashboard.png" alt="BitKids child dashboard" class="phone-screenshot" width="228" height="494" loading="eager" decoding="async" />
           </div>
 
           <div class="phone phone-right">
-            <div class="phone-notch"></div>
-            <img src="/learn-ui.png" alt="BitKids learn screen" class="phone-screen-img" width="228" height="494" loading="eager" decoding="async" />
+            <img src="/screenshots/learn-screen.png" alt="BitKids learn screen" class="phone-screenshot" width="228" height="494" loading="eager" decoding="async" />
           </div>
 
         </div>
