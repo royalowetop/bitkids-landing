@@ -191,6 +191,8 @@
       box-shadow: 0 32px 80px rgba(26,16,51,.45), 0 0 0 1.5px rgba(255,255,255,.06);
       overflow: hidden;
       transform-origin: bottom center;
+      display: flex;
+      flex-direction: column;
     }
     .phone-notch {
       width: 90px; height: 24px; background: var(--bg-dark);
@@ -203,15 +205,17 @@
       background: #2A1F4A; border-radius: 3px;
     }
     .phone-screen { padding: 0 14px 20px; }
-    .phone-screenshot {
+    .phone-screen-img {
+      flex: 1;
       display: block;
       width: calc(100% - 12px);
-      height: calc(100% - 34px);
-      margin: 4px auto 6px;
+      margin: 0 auto 8px;
       border-radius: 18px;
       object-fit: contain;
       object-position: top center;
       background: #FFFBF5;
+      min-height: 380px;
+      max-height: 480px;
     }
     .phone-main {
       left: 50%; top: 0;
@@ -565,7 +569,18 @@
     /* ── Responsive ── */
     @media (max-width: 900px) {
       .hero-inner { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
+      .hero-visual { display: block; margin-top: 40px; }
+      .phone-stack { height: 480px; max-width: 280px; margin: 0 auto; }
+      .phone-left, .phone-right { display: none; }
+      .phone-main {
+        position: relative;
+        left: auto;
+        right: auto;
+        top: 0;
+        transform: none;
+        margin: 0 auto;
+        opacity: 1;
+      }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
       .steps { grid-template-columns: 1fr; }
       .step:not(:last-child)::after { content: '↓'; right: auto; left: 50%; top: auto; bottom: -24px; transform: translateX(-50%); }
@@ -592,7 +607,7 @@
   <div class="container">
     <div class="nav-inner">
       <a href="#" class="nav-logo">
-        <img src="/bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" />
+        <img src="/bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" width="36" height="36" />
         BitKids
       </a>
       <ul class="nav-links">
@@ -660,17 +675,17 @@
 
           <div class="phone phone-left">
             <div class="phone-notch"></div>
-            <img src="/screenshots/parent-ui.png" alt="BitKids parent dashboard" class="phone-screenshot" width="260" height="520" loading="eager" decoding="async" />
+            <img src="/parent-ui.png" alt="BitKids parent dashboard" class="phone-screen-img" width="228" height="494" loading="eager" decoding="async" />
           </div>
 
           <div class="phone phone-main">
             <div class="phone-notch"></div>
-            <img src="/screenshots/child-ui.png" alt="BitKids child dashboard" class="phone-screenshot" width="280" height="520" loading="eager" decoding="async" />
+            <img src="/child-ui.png" alt="BitKids child dashboard" class="phone-screen-img" width="228" height="494" loading="eager" decoding="async" />
           </div>
 
           <div class="phone phone-right">
             <div class="phone-notch"></div>
-            <img src="/screenshots/learn-ui.png" alt="BitKids learn screen" class="phone-screenshot" width="260" height="520" loading="eager" decoding="async" />
+            <img src="/learn-ui.png" alt="BitKids learn screen" class="phone-screen-img" width="228" height="494" loading="eager" decoding="async" />
           </div>
 
         </div>
@@ -1075,7 +1090,7 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo" style="margin-bottom:14px;">
-          <img src="/bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" />
+          <img src="/bitkids-logo-180.png" alt="BitKids" class="nav-logo-img" width="36" height="36" />
           BitKids
         </div>
         <p>The family Bitcoin app. Teach your kids financial literacy through real, hands-on experience with the Lightning Network.</p>
